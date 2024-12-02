@@ -8,7 +8,7 @@ mod repositories;
 mod services;
 mod controllers;
 
-use controllers::user_controller::{get_users, get_user_by_id};
+use controllers::user_controller::{get_users, get_user_by_id,create_user};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -26,6 +26,7 @@ async fn main() -> std::io::Result<()> {
             .app_data(web::Data::new(db.clone())) // 将数据库连接注入到应用中
             .service(get_users)
             .service(get_user_by_id)
+            .service(create_user) // 路由: 创建新用户
     })
         .bind(server_address)?
         .run()

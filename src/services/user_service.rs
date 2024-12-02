@@ -1,5 +1,5 @@
 use crate::repositories::user_repository::UserRepository;
-use crate::models::user::Model as UserModel;
+use crate::models::users::Model as UserModel;
 use sea_orm::DatabaseConnection;
 
 pub struct UserService;
@@ -17,5 +17,15 @@ impl UserService {
         UserRepository::get_user_by_id(db, user_id)
             .await
             .map_err(|err| format!("Failed to fetch user: {}", err))
+    }
+
+
+    pub async fn create_user(
+        db: &DatabaseConnection,
+        user: UserModel,
+    ) -> Result<i32, String> {
+        UserRepository::create_user(db, user)
+            .await
+            .map_err(|err| format!("Failed to create user: {}", err))
     }
 }
